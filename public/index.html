@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Mini CRUD PDO</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --text:#0f172a; --muted:#6b7280; --line:#e5e7eb;
+    --primary:#6366f1; --primary-700:#4f46e5; --danger:#ef4444; --danger-600:#dc2626; --success:#10b981;
+    --radius:12px; --shadow:0 8px 24px rgba(2,6,23,.06); --ring:0 0 0 3px rgba(99,102,241,.25);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa3b2; --line:#1f2937;
+      --shadow:0 10px 28px rgba(0,0,0,.35); --ring:0 0 0 3px rgba(99,102,241,.35);
+    }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(99,102,241,.08), transparent 50%),
+      radial-gradient(900px 500px at 110% 10%, rgba(16,185,129,.06), transparent 50%),
+      var(--bg);
+    color:var(--text);
+  }
+  .wrap{ max-width:980px; margin:48px auto; padding:0 24px; }
+  h1{ margin:0 0 18px; font-size:clamp(28px,3.6vw,42px); line-height:1.05; letter-spacing:-.02em; }
+  hr{ border:0; height:1px; background:linear-gradient(90deg,transparent,var(--line),transparent); margin:14px 0 16px; }
+
+  /* Formulario */
+  #fnew{
+    display:flex; gap:10px; align-items:center;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:12px; box-shadow:var(--shadow);
+  }
+  #fnew input{
+    flex:1 1 260px; background:#fff0; color:var(--text);
+    border:1px solid var(--line); border-radius:10px; padding:10px 12px; font-size:15px;
+    transition: box-shadow .18s ease, border-color .18s ease, transform .05s ease; outline:none;
+  }
+  #fnew input::placeholder{ color:var(--muted); }
+  #fnew input:focus{ border-color:var(--primary); box-shadow:var(--ring); }
+  #fnew button{
+    border:0; background:linear-gradient(180deg,var(--primary),var(--primary-700)); color:#fff; font-weight:600;
+    padding:10px 14px; border-radius:10px; cursor:pointer; box-shadow:0 6px 18px rgba(79,70,229,.25);
+    transform:translateY(0); transition:transform .08s ease, filter .18s ease, box-shadow .18s ease;
+  }
+  #fnew button:hover{ filter:saturate(1.1) brightness(1.02); transform:translateY(-1px); }
+  #fnew button:active{ transform:translateY(0); }
+
+  /* Tabla */
+  table{
+    width:100%; border-collapse:separate; border-spacing:0; background:var(--card);
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);
+  }
+  thead th{
+    background:linear-gradient(180deg, rgba(99,102,241,.08), rgba(99,102,241,.03));
+    color:var(--text); font-weight:800; text-align:left; letter-spacing:.2px; border-bottom:1px solid var(--line);
+    padding:12px 14px;
+  }
+  tbody td{ padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:middle; line-height:1.35; }
+  tbody tr:nth-child(even) td{ background:rgba(15,23,42,.02); }
+  tbody tr:hover td{ background:rgba(99,102,241,.06); transition:background .18s ease; }
+
+  /* Botonera acciones */
+  .actions{ display:flex; gap:8px; align-items:center; }
+  .btn{
+    border:0; color:#fff; font-weight:600; padding:8px 12px; border-radius:10px; cursor:pointer;
+    transition:transform .08s ease, filter .18s ease; display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn:hover{ transform:translateY(-1px); filter:brightness(1.03); }
+  .btn--primary{ background:linear-gradient(180deg,var(--primary),var(--primary-700)); box-shadow:0 6px 16px rgba(79,70,229,.22); }
+  .btn--danger{  background:linear-gradient(180deg,var(--danger),var(--danger-600)); box-shadow:0 6px 16px rgba(239,68,68,.22); }
+
+  /* Editables */
+  [contenteditable]{ outline:2px dashed transparent; border-radius:8px; transition:background .15s ease, outline-color .15s ease; }
+  [contenteditable]:hover{ background:rgba(99,102,241,.06); }
+  [contenteditable]:focus{ outline-color:var(--primary); background:rgba(99,102,241,.12); }
+
+  /* Feedback guardado */
+  .row-saved td{ background: rgba(16,185,129,.12) !important; transition: background .3s ease; }
+
+  /* Estado vacío */
+  #rows:empty::before{
+    content:"Sin datos aún. Crea el primer item 👇";
+    display:block; color:var(--muted); text-align:center; padding:22px;
+  }
+
+  /* ===== Modal ===== */
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(15,23,42,.45);
+    display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  .modal-backdrop.show{ display:flex; }
+  .modal{
+    width:100%; max-width:520px; background:var(--card); border:1px solid var(--line);
+    border-radius:16px; box-shadow: var(--shadow);
+  }
+  .modal header{
+    padding:16px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between;
+  }
+  .modal header h3{ margin:0; font-size:18px; }
+  .modal .close{ border:0; background:transparent; font-size:20px; cursor:pointer; color:var(--muted); }
+  .modal .content{ padding:18px; display:grid; gap:12px; }
+  .modal .content label{ font-size:13px; color:var(--muted); }
+  .modal .content input{
+    width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff0; color:var(--text);
+    outline:none; transition: box-shadow .18s ease, border-color .18s ease;
+  }
+  .modal .content input:focus{ border-color:var(--primary); box-shadow:var(--ring); }
+  .modal footer{ display:flex; gap:10px; justify-content:flex-end; padding:16px 18px; border-top:1px solid var(--line); }
+  .btn--ghost{ background:transparent; color:var(--text); border:1px solid var(--line); }
+  .btn--success{ background:linear-gradient(180deg,var(--success),#0ea472); }
+
+  /* Responsive */
+  @media (max-width:640px){
+    #fnew{ flex-wrap:wrap; }
+    #fnew input{ flex:1 1 100%; }
+    #fnew button{ width:100%; }
+    thead{ position:sticky; top:0; z-index:1; }
+    table{ display:block; overflow-x:auto; }
+  }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Mini CRUD PDO</h1>
+
+    <form id="fnew" autocomplete="off">
+      <input name="nombre" placeholder="Nombre" required />
+      <input name="precio" type="number" step="0.01" min="0" placeholder="Precio" required />
+      <button>Crear</button>
+    </form>
+
+    <hr>
+
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Creado</th><th>Acciones</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </main>
+
+  <!-- Modal Actualizar -->
+  <div id="modalEdit" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+      <header>
+        <h3 id="editTitle">Actualizar item</h3>
+        <button class="close" type="button" data-close>&times;</button>
+      </header>
+      <form id="formEdit">
+        <div class="content">
+          <div>
+            <label for="editNombre">Nombre</label>
+            <input id="editNombre" name="nombre" required />
+          </div>
+          <div>
+            <label for="editPrecio">Precio</label>
+            <input id="editPrecio" name="precio" type="number" step="0.01" min="0" required />
+          </div>
+        </div>
+        <footer>
+          <button class="btn btn--ghost" type="button" data-close>Cancelar</button>
+          <button class="btn btn--success" type="submit">Guardar cambios</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  const API = 'api/items.php';
+
+  async function fetchJson(url, options){
+    const r = await fetch(url, options);
+    const ct = r.headers.get('content-type') || '';
+    const text = await r.text();
+    if (!ct.includes('application/json')) {
+      console.error('Respuesta NO JSON:', text);
+      throw new Error('Respuesta no JSON (ver consola/Network)');
+    }
+    const j = JSON.parse(text);
+    if (!r.ok || j.ok === false) {
+      console.error('API error:', j);
+      throw new Error(j.error || 'Error de API');
+    }
+    return j;
+  }
+
+  async function listar(){
+    try{
+      const j = await fetchJson(`${API}?action=listar`);
+      const tb = document.getElementById('rows');
+      tb.innerHTML = '';
+      (j.data || []).forEach(it => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${it.id}</td>
+          <td contenteditable data-id="${it.id}" data-field="nombre">${it.nombre}</td>
+          <td contenteditable data-id="${it.id}" data-field="precio">${it.precio}</td>
+          <td>${new Date(it.creado_en).toLocaleString()}</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn--primary" type="button" data-upd="${it.id}">Actualizar</button>
+              <button class="btn btn--danger"  type="button" data-del="${it.id}">Eliminar</button>
+            </div>
+          </td>`;
+        tb.appendChild(tr);
+      });
+    }catch(e){
+      alert('No se pudo listar: ' + e.message);
+    }
+  }
+
+  document.getElementById('fnew').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const payload = { nombre: fd.get('nombre'), precio: Number(fd.get('precio')) };
+    try{
+      await fetchJson(`${API}?action=crear`, { method:'POST', body: JSON.stringify(payload) });
+      e.target.reset();
+      listar();
+    }catch(e){
+      alert('No se pudo crear: ' + e.message);
+    }
+  });
+
+  // Guardado on-blur
+  document.getElementById('rows').addEventListener('blur', async (e) => {
+    if (e.target.matches('[contenteditable]')) {
+      const id = e.target.dataset.id;
+      const field = e.target.dataset.field;
+      let val = e.target.textContent.trim();
+      if (field === 'precio') val = Number(val);
+      try{
+        await fetchJson(`${API}?action=actualizar&id=${id}`, {
+          method:'POST', body: JSON.stringify({ [field]: val })
+        });
+        const tr = e.target.closest('tr');
+        tr.classList.add('row-saved'); setTimeout(()=>tr.classList.remove('row-saved'), 600);
+      }catch(e){
+        alert('No se pudo actualizar: ' + e.message);
+      }
+    }
+  }, true);
+
+  // Delegación de clics (Actualizar + Eliminar) con closest
+  document.getElementById('rows').addEventListener('click', async (e) => {
+    const btnUpd = e.target.closest('[data-upd]');
+    const btnDel = e.target.closest('[data-del]');
+
+    // 📝 Abrir modal de actualización
+    if (btnUpd) {
+      const id = btnUpd.dataset.upd;
+      const tr = btnUpd.closest('tr');
+      const nombre = tr.querySelector('[data-field="nombre"]').textContent.trim();
+      const precio = tr.querySelector('[data-field="precio"]').textContent.trim();
+
+      openModal({ id, nombre, precio });
+      return;
+    }
+
+    // 🗑️ Eliminar
+    if (btnDel && confirm('¿Eliminar item?')) {
+      try{
+        await fetchJson(`${API}?action=eliminar&id=${btnDel.dataset.del}`, { method:'POST' });
+        listar();
+      }catch(e){
+        alert('No se pudo eliminar: ' + e.message);
+      }
+    }
+  });
+
+  // ===== Modal logic =====
+  const modal = document.getElementById('modalEdit');
+  const formEdit = document.getElementById('formEdit');
+  const editNombre = document.getElementById('editNombre');
+  const editPrecio = document.getElementById('editPrecio');
+
+  function openModal({id, nombre, precio}){
+    formEdit.dataset.id = id;
+    editNombre.value = nombre;
+    editPrecio.value = Number(precio);
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    editNombre.focus();
+  }
+  function closeModal(){
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    formEdit.reset();
+    delete formEdit.dataset.id;
+  }
+
+  // Cerrar modal (botón, backdrop, tecla ESC)
+  modal.addEventListener('click', (e)=>{
+    if (e.target.matches('[data-close]') || e.target === modal) closeModal();
+  });
+  window.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+
+  // Guardar desde el modal
+  formEdit.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const id = formEdit.dataset.id;
+    const nombre = editNombre.value.trim();
+    const precio = Number(editPrecio.value);
+    if (!nombre){ alert('El nombre es obligatorio'); return; }
+    if (isNaN(precio) || precio < 0){ alert('Precio inválido'); return; }
+
+    try{
+      await fetchJson(`${API}?action=actualizar&id=${id}`, {
+        method:'POST', body: JSON.stringify({ nombre, precio })
+      });
+      closeModal();
+      listar();
+    }catch(err){
+      alert('No se pudo actualizar: ' + err.message);
+    }
+  });
+
+  listar();
+  </script>
+</body>
+</html>
