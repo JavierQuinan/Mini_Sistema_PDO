@@ -1,122 +1,220 @@
-# 🚀 Mini Sistema CRUD (PHP + PDO)
+<div align="center">
 
-[![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4?logo=php&logoColor=white)](https://www.php.net/)
-[![MySQL](https://img.shields.io/badge/MySQL-5.7+-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+# 🚀 Mini Sistema CRUD - PHP PDO
 
-Sistema CRUD completo de **Items** con backend en **PHP + PDO** (API JSON) y frontend en **HTML + CSS + JS** vanilla.  
-Diseñado para ser **simple, seguro, entendible y extensible**.
+### Sistema de Gestión de Items con Backend RESTful API
 
-> **Stack:** PHP 8+, MySQL/MariaDB, PDO, HTML/CSS/JS vanilla.
+[![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
+[![SQLite](https://img.shields.io/badge/SQLite-3.0+-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-5.7+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 
----
+**Sistema CRUD profesional con API RESTful, validaciones robustas y testing automatizado**
 
-## ✨ Características
+[Demo](#-instalación) • [Características](#-características-destacadas) • [Documentación](#-documentación-de-api) • [Tests](#-testing)
 
-- ✅ **CRUD completo**: crear, listar, actualizar, eliminar
-- 🔒 **Seguridad**: PDO con *prepared statements*, validaciones mejoradas, sanitización de inputs
-- 🌐 **API JSON**: respuestas siempre en formato JSON con manejo de errores robusto
-- 🎨 **Frontend moderno**: tabla editable, modal de actualización, diseño responsive
-- 📝 **Logging**: sistema de registro de errores para debugging
-- 🛡️ **CORS configurado**: listo para integración con frontends externos
-- ⚡ **Validaciones**: límites de tamaño, rangos de precio, sanitización XSS
+</div>
 
 ---
 
-## 🗂️ Estructura del proyecto
+## 📋 Tabla de Contenidos
+
+- [Características Destacadas](#-características-destacadas)
+- [Tech Stack](#-tech-stack)
+- [Instalación Rápida](#-instalación-rápida)
+- [Documentación de API](#-documentación-de-api)
+- [Testing](#-testing)
+- [Seguridad](#-seguridad)
+- [Contribuir](#-contribuir)
+- [Licencia](#-licencia)
+
+---
+
+## ✨ Características Destacadas
+
+<table>
+<tr>
+<td>
+
+### 🎯 CRUD Completo
+- ✅ Crear, Leer, Actualizar, Eliminar
+- ✅ Paginación inteligente
+- ✅ Validaciones en tiempo real
+- ✅ Sanitización automática
+
+</td>
+<td>
+
+### 🔒 Seguridad
+- ✅ PDO Prepared Statements
+- ✅ Protección XSS
+- ✅ Validaciones robustas
+- ✅ CORS configurable
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🚀 Performance
+- ✅ Singleton Pattern
+- ✅ Consultas optimizadas
+- ✅ Logging eficiente
+- ✅ Cache-ready
+
+</td>
+<td>
+
+### 🧪 Testing
+- ✅ 20 tests unitarios
+- ✅ Cobertura completa
+- ✅ CI/CD ready
+- ✅ Validación automática
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🛠️ Tech Stack
+
+<div align="center">
+
+### Backend
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![PDO](https://img.shields.io/badge/PDO-Database-blue?style=for-the-badge)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+
+### Frontend
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Tools & Patterns
+![REST API](https://img.shields.io/badge/REST-API-green?style=for-the-badge)
+![Singleton](https://img.shields.io/badge/Pattern-Singleton-orange?style=for-the-badge)
+![MVC](https://img.shields.io/badge/Architecture-MVC-red?style=for-the-badge)
+
+</div>
+
+---
+
+## � Estructura del Proyecto
 
 ```
 Mini_Sistema_PDO/
-├── config.php              # (privado) Configuración real - NO subir a git
-├── config.example.php      # (público) Plantilla de configuración
-├── config_sqlite.php       # Configuración específica para SQLite
-├── Database.php            # Singleton PDO + helpers (select/exec/tx)
-├── ItemModel.php           # Lógica de dominio (CRUD completo)
-├── setup_sqlite.php        # Script de configuración SQLite
-├── run_tests.php           # Suite de tests unitarios
-├── .gitignore             # Archivos ignorados por git
-├── sql.txt                # Script de creación de BD MySQL
-├── database.sqlite        # Base de datos SQLite (generada)
-├── README.md              # Esta documentación
-├── LICENSE                # Licencia MIT
-├── logs/                  # Directorio de logs (auto-creado)
-└── public/
-    ├── index.html         # UI (form, tabla, modal, CSS y JS)
-    └── api/
-        └── items.php      # Endpoints JSON
+│
+├── 📂 public/                  # Directorio público (DocumentRoot)
+│   ├── index.html             # Frontend (UI moderna)
+│   └── 📂 api/
+│       └── items.php          # API RESTful endpoints
+│
+├── 📂 logs/                    # Logs del sistema (auto-generado)
+│   └── error.log              # Registro de errores
+│
+├── 🔧 config.php               # Configuración activa (privado)
+├── 📋 config.example.php       # Plantilla de configuración
+├── 🗄️ config_sqlite.php        # Config específica SQLite
+│
+├── 🏗️ Database.php             # Clase Singleton PDO
+├── 📦 ItemModel.php            # Modelo de datos (CRUD)
+│
+├── 🚀 setup_sqlite.php         # Setup automático SQLite
+├── 🧪 run_tests.php            # Suite de tests
+│
+├── 📄 sql.txt                  # Script SQL para MySQL
+├── 📖 README.md                # Esta documentación
+├── ⚖️ LICENSE                  # Licencia MIT
+└── 🚫 .gitignore               # Archivos ignorados
 ```
 
 ---
 
-## 🔧 Requisitos
+## 🎯 Características Avanzadas
 
-- **PHP 8.0+** con extensiones:
-  - `pdo_mysql` (para MySQL) o `pdo_sqlite` (para SQLite)
-- **MySQL/MariaDB 5.7+** (opcional si usas SQLite)
-- Navegador moderno (Chrome, Firefox, Edge, Safari)
+### Frontend Moderno
 
-### Verificar extensiones PHP:
+- 🎨 **Diseño Responsive**: funciona en móvil, tablet y desktop
+- 🌓 **Dark Mode**: soporte automático según preferencias del sistema
+- ✏️ **Edición Inline**: edita directamente en la tabla
+- 🔄 **Actualización en Tiempo Real**: sin recargar página
+- 🎭 **Modal Moderno**: interfaz intuitiva para actualizaciones
 
-```bash
-# Para SQLite (recomendado)
-php -m | grep pdo_sqlite
+### Backend Robusto
 
-# Para MySQL (opcional)
-php -m | grep pdo_mysql
-
-# En Windows PowerShell:
-php -m | findstr /I pdo_sqlite
-php -m | findstr /I pdo_mysql
-```
+- 🏗️ **Patrón Singleton**: una sola conexión a BD
+- 🔄 **Transacciones**: soporte completo para operaciones complejas
+- 📝 **Logging Avanzado**: contexto completo en cada error
+- 🎯 **API RESTful**: diseño limpio y escalable
+- ⚡ **Performance**: consultas optimizadas
 
 ---
 
-## 📦 Instalación
+## 🗺️ Roadmap
 
-### 1️⃣ Clonar el repositorio
+### Versión 2.0 (Planificado)
+
+- [ ] 🔍 Búsqueda y filtros avanzados
+- [ ] 📊 Dashboard con estadísticas
+- [ ] 🔐 Sistema de autenticación JWT
+- [ ] 👥 Multi-usuario con roles
+- [ ] 📱 PWA (Progressive Web App)
+- [ ] 🐳 Docker containerization
+- [ ] 📈 Métricas y analytics
+
+### Mejoras Continuas
+
+- [ ] GraphQL API
+- [ ] WebSockets para tiempo real
+- [ ] Exportación a PDF/Excel
+- [ ] Importación masiva
+- [ ] Auditoría de cambios
+- [ ] Soft delete con papelera
+
+---
+
+## 📦 Instalación Rápida
+
+### Opción 1: Setup Automático con SQLite (⚡ Recomendado)
 
 ```bash
-git clone <tu-repo>
+# 1. Clonar repositorio
+git clone https://github.com/JavierQuinan/Mini_Sistema_PDO.git
 cd Mini_Sistema_PDO
-```
 
-### 2️⃣ Configurar la base de datos
-
-**Opción A: SQLite (Recomendado - No requiere instalación)**
-
-```bash
+# 2. Configurar base de datos SQLite (automático)
 php setup_sqlite.php
+
+# 3. Iniciar servidor
+php -S localhost:8000 -t public
+
+# 4. Abrir navegador
+# http://localhost:8000
 ```
 
-Esto creará automáticamente:
-- Base de datos `database.sqlite`
-- Tabla `items` con estructura completa
-- 5 items de ejemplo para probar
-
-**Opción B: MySQL (Si ya tienes MySQL instalado)**
-
-Ejecuta el script SQL:
+### Opción 2: Configuración con MySQL
 
 ```bash
+# 1. Crear base de datos
 mysql -u root -p < sql.txt
-```
 
-Luego actualiza `config.php` descomentando las líneas de MySQL.
+# 2. Configurar credenciales
+# Editar config.php y descomentar las líneas de MySQL
 
-### 3️⃣ Iniciar el servidor
-
-```bash
+# 3. Iniciar servidor
 php -S localhost:8000 -t public
 ```
 
-### 4️⃣ Acceder a la aplicación
-
-Abre tu navegador en: **http://localhost:8000**
-
-### 5️⃣ (Opcional) Ejecutar tests
+### 🎯 Verificar Instalación
 
 ```bash
+# Ejecutar suite de tests
 php run_tests.php
+
+# Resultado esperado: ✅ 20/20 tests pasados
 ```
 
 ---
@@ -128,71 +226,141 @@ Base: `/api/items.php`
 - **Listar**
   ```
   GET  ?action=listar&limit=50&offset=0
-  ```
-- **Obtener**
-  ```
-  GET  ?action=obtener&id=:id
-  ```
-- **Crear**
-  ```
-  POST ?action=crear
-  Body JSON: { "nombre": "Aceite", "precio": 10.5 }
-  ```
-- **Actualizar**
-  ```
-  POST ?action=actualizar&id=:id
-  Body JSON (parcial o completo): { "nombre": "Aceite 5W30", "precio": 12.00 }
-  ```
-- **Eliminar**
-  ```
-  POST ?action=eliminar&id=:id
-  ```
+  ``� Documentación de API
 
-### Ejemplos con `curl`
+### Endpoints Disponibles
+
+| Método | Endpoint | Descripción | Body |
+|--------|----------|-------------|------|
+| `GET` | `/api/items.php?action=listar` | Listar todos los items | - |
+| `GET` | `/api/items.php?action=obtener&id={id}` | Obtener item por ID | - |
+| `POST` | `/api/items.php?action=crear` | Crear nuevo item | `{nombre, precio}` |
+| `POST` | `/api/items.php?action=actualizar&id={id}` | Actualizar item | `{nombre?, precio?}` |
+| `POST` | `/api/items.php?action=eliminar&id={id}` | Eliminar item | - |
+
+### Ejemplos de Uso
+
+<details>
+<summary>📋 Listar Items (con paginación)</summary>
 
 ```bash
-# Listar
-curl "http://127.0.0.1:8080/api/items.php?action=listar"
-
-# Crear
-curl -X POST "http://127.0.0.1:8080/api/items.php?action=crear"   -H "Content-Type: application/json"   -d '{"nombre":"Filtro de aceite","precio":7.90}'
-
-# Actualizar
-curl -X POST "http://127.0.0.1:8080/api/items.php?action=actualizar&id=1"   -H "Content-Type: application/json"   -d '{"precio":8.50}'
-
-# Eliminar
-curl -X POST "http://127.0.0.1:8080/api/items.php?action=eliminar&id=1"
+curl "http://localhost:8000/api/items.php?action=listar&limit=10&offset=0"
 ```
 
----
+**Respuesta:**
+```json
+{
+  "ok": true,
+  "data": [
+    {
+      "id": 1,
+      "nombre": "Laptop HP",
+      "precio": "1200.00",
+      "creado_en": "2025-12-28 10:30:00"
+    }
+  ]
+}
+```
+</details>
 
-## 🛡️ Seguridad
+<details>
+<sum� Seguridad
 
-- ✅ **PDO con prepared statements** (protección contra SQL injection)
-- ✅ **Sanitización de inputs** con `htmlspecialchars()`
+### Medidas Implementadas
+
+| Característica | Implementación | Nivel |
+|----------------|----------------|-------|
+| SQL Injection | PDO Prepared Statements | 🟢 Alto |
+| XSS Protection | `htmlspecialchars()` | 🟢 Alto |
+| CORS | Headers configurables | 🟢 Alto |
+| Validaciones | Servidor + Cliente | 🟢 Alto |
+| Error Handling | Logging centralizado | 🟢 Alto |
+
+### Validaciones de Entrada
+
+```php
+// Validaciones automáticas
+✅ Nombre: máx 120 caracteres, no vacío
+✅ Precio: rango 0 - 999,999.99
+✅ Sanitización: escape de HTML
+✅ Type Safety: strict types habilitado
+```
+
+### Buenas Prácticas
+
+- ✅ Sin credenciales en el código
+- ✅ `.gitignore` configurado
+- ✅ Archivos de configuración separados
+- ✅ Manejo de errores sin exponer información sensible
+- ✅ Logging solo en modo desarrollod '{"precio":139.99}'
+```
+</details>
+
+<details>
+<summary>🗑️ Eliminar Item</summary>
+
+```bash
+curl -X POST "http://localhost:8000/api/items.php?action=eliminar&id=6"
+```
+
+**Respuesta:**
+```json
+{
+  "ok": true,
+  "deleted": 6
+}
+```
+</details> **Sanitización de inputs** con `htmlspecialchars()`
 - ✅ **Validaciones robustas**: longitud de strings, rangos numéricos
 - ✅ **CORS configurado** para peticiones cross-origin
 - ✅ **Manejo de errores centralizado** con logging
 - ✅ **Headers de seguridad** configurados
-- ✅ **Protección XSS** mediante sanitización
+- ✅ **Proting
 
----
+### Suite de Tests Automatizados
 
-## 📊 Validaciones implementadas
+El proyecto incluye **20 tests unitarios** que validan toda la funcionalidad:
 
-| Campo    | Validación                                      |
-|----------|-------------------------------------------------|
-| `nombre` | No vacío, máx 120 caracteres, sanitizado XSS   |
-| `precio` | >= 0, máx 999999.99                             |
+```bash
+php run_tests.php
+```
 
----
+### Cobertura de Tests
 
-## 🔍 Logging
+| Categoría | Tests | Estado |
+|-----------|-------|--------|
+| 📋 CRUD Básico | 6 tests | ✅ 100% |
+| 🛡️ Validaciones | 4 tests | ✅ 100% |
+| 🔒 Seguridad XSS | 2 tests | ✅ 100% |
+| 📄 Paginación | 2 tests | ✅ 100% |
+| **Total** | **20 tests** | **✅ 100%** |
 
-Los errores se registran automáticamente en `logs/error.log` cuando `APP_DEBUG = true`:
+### Ejemplo de Salida
 
 ```
-[2025-12-28 10:30:45] Error de BD: Connection refused | {"code":"2002"}
+🧪 Iniciando Suite de Tests - Mini Sistema PDO
+============================================================
+
+📋 Test 1: Listar Items
+✅ PASS: Listar debe retornar un array
+✅ PASS: Debe haber al menos un item en la BD
+
+➕ Test 2: Crear Item
+✅ PASS: Crear debe retornar el item creado
+✅ PASS: El nombre debe coincidir
+✅ PASS: El precio debe coincidir
+
+...
+
+============================================================
+📊 RESUMEN DE TESTS
+============================================================
+✅ Tests pasados: 20
+❌ Tests fallidos: 0
+📈 Total: 20
+
+🎉 ¡Todos los tests pasaron exitosamente!
+``` refused | {"code":"2002"}
 [2025-12-28 10:31:12] Validación fallida: El nombre no puede exceder 120 caracteres
 ```
 
