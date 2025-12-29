@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-/** Configuración de Base de Datos */
-// Para SQLite (por defecto, funciona sin MySQL instalado)
-const DB_DSN  = 'sqlite:' . __DIR__ . '/database.sqlite';
-const DB_USER = '';  // SQLite no requiere usuario
-const DB_PASS = '';  // SQLite no requiere contraseña
+/**
+ * Configuración para SQLite (alternativa a MySQL)
+ * Copia este contenido a config.php para usar SQLite
+ */
 
-// Para MySQL (descomentar cuando tengas MySQL instalado)
-// const DB_DSN  = 'mysql:host=127.0.0.1;port=3306;dbname=minisistema_pdo;charset=utf8mb4';
-// const DB_USER = 'root';
-// const DB_PASS = '';
+/** Configuración de Base de Datos SQLite */
+$dbPath = __DIR__ . '/database.sqlite';
+const DB_DSN  = 'sqlite:' . __DIR__ . '/database.sqlite';
+const DB_USER = '';  // SQLite no usa usuario
+const DB_PASS = '';  // SQLite no usa contraseña
 
 /** Modo dev */
 const APP_DEBUG = true;

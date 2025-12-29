@@ -1,6 +1,9 @@
 # Configuración privada
 config.php
 
+# Base de datos
+database.sqlite
+
 # IDEs
 .vscode/
 .idea/

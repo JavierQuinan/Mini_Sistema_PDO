@@ -29,10 +29,14 @@ Diseñado para ser **simple, seguro, entendible y extensible**.
 Mini_Sistema_PDO/
 ├── config.php              # (privado) Configuración real - NO subir a git
 ├── config.example.php      # (público) Plantilla de configuración
+├── config_sqlite.php       # Configuración específica para SQLite
 ├── Database.php            # Singleton PDO + helpers (select/exec/tx)
 ├── ItemModel.php           # Lógica de dominio (CRUD completo)
+├── setup_sqlite.php        # Script de configuración SQLite
+├── run_tests.php           # Suite de tests unitarios
 ├── .gitignore             # Archivos ignorados por git
-├── sql.txt                # Script de creación de BD
+├── sql.txt                # Script de creación de BD MySQL
+├── database.sqlite        # Base de datos SQLite (generada)
 ├── README.md              # Esta documentación
 ├── LICENSE                # Licencia MIT
 ├── logs/                  # Directorio de logs (auto-creado)
@@ -46,76 +50,74 @@ Mini_Sistema_PDO/
 
 ## 🔧 Requisitos
 
-- PHP 8.0+ con extensión **pdo_mysql** habilitada.
-- MySQL/MariaDB.
-- Navegador moderno.
+- **PHP 8.0+** con extensiones:
+  - `pdo_mysql` (para MySQL) o `pdo_sqlite` (para SQLite)
+- **MySQL/MariaDB 5.7+** (opcional si usas SQLite)
+- Navegador moderno (Chrome, Firefox, Edge, Safari)
 
-Verifica `pdo_mysql`:
+### Verificar extensiones PHP:
+
 ```bash
+# Para SQLite (recomendado)
+php -m | grep pdo_sqlite
+
+# Para MySQL (opcional)
 php -m | grep pdo_mysql
-# en Windows PowerShell:
-# php -m | findstr /I pdo_mysql
+
+# En Windows PowerShell:
+php -m | findstr /I pdo_sqlite
+php -m | findstr /I pdo_mysql
 ```
 
 ---
 
-## 🛠️ Instalación
+## 📦 Instalación
 
-1) **Base de datos**
-```sql
-CREATE DATABASE minisistema_pdo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE minisistema_pdo;
+### 1️⃣ Clonar el repositorio
 
-CREATE TABLE items (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(120) NOT NULL,
-  precio DECIMAL(10,2) NOT NULL DEFAULT 0,
-  creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-2) **Configurar credenciales**
-
-Copia `config.example.php` a `config.php` y ajusta tus datos reales.
-
-```php
-<?php
-declare(strict_types=1);
-
-const DB_DSN  = 'mysql:host=127.0.0.1;port=3306;dbname=minisistema_pdo;charset=utf8mb4';
-const DB_USER = 'TU_USUARIO';
-const DB_PASS = 'TU_PASSWORD';
-
-const APP_DEBUG = true; // en producción: false
-
-function json_out($data, int $status = 200): void {
-  http_response_code($status);
-  header('Content-Type: application/json; charset=utf-8');
-  echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-  exit;
-}
-```
-
-3) **Ignorar `config.php` en git**
-```gitignore
-config.php
-vendor/
-node_modules/
-*.log
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
-public/uploads/
-```
-
-4) **Levantar el servidor**
 ```bash
-php -S 127.0.0.1:8080 -t public
-# Abrir http://127.0.0.1:8080/
+git clone <tu-repo>
+cd Mini_Sistema_PDO
 ```
 
-> Nota: La API está en `public/api/items.php`, y el frontend la consume como `api/items.php`.
+### 2️⃣ Configurar la base de datos
+
+**Opción A: SQLite (Recomendado - No requiere instalación)**
+
+```bash
+php setup_sqlite.php
+```
+
+Esto creará automáticamente:
+- Base de datos `database.sqlite`
+- Tabla `items` con estructura completa
+- 5 items de ejemplo para probar
+
+**Opción B: MySQL (Si ya tienes MySQL instalado)**
+
+Ejecuta el script SQL:
+
+```bash
+mysql -u root -p < sql.txt
+```
+
+Luego actualiza `config.php` descomentando las líneas de MySQL.
+
+### 3️⃣ Iniciar el servidor
+
+```bash
+php -S localhost:8000 -t public
+```
+
+### 4️⃣ Acceder a la aplicación
+
+Abre tu navegador en: **http://localhost:8000**
+
+### 5️⃣ (Opcional) Ejecutar tests
+
+```bash
+php run_tests.php
+```
 
 ---
 
@@ -209,6 +211,31 @@ Los errores se registran automáticamente en `logs/error.log` cuando `APP_DEBUG 
 7. 🎯 **Manejo de errores diferenciado** (validación, BD, genéricos)
 8. 📚 **Documentación mejorada** con badges y estructura clara
 9. ⚖️ **Licencia MIT** incluida
+10. 🗄️ **Soporte SQLite** - funciona sin necesidad de instalar MySQL
+11. 🧪 **Suite de tests** - 20 tests unitarios automatizados
+12. 🚀 **Setup automático** - script de configuración con un solo comando
+
+---
+
+## 🧪 Tests
+
+El proyecto incluye una suite completa de tests unitarios:
+
+```bash
+php run_tests.php
+```
+
+**Tests incluidos:**
+- ✅ Listar items con paginación
+- ✅ Crear items con validaciones
+- ✅ Obtener item por ID
+- ✅ Actualizar items (parcial y completo)
+- ✅ Eliminar items
+- ✅ Validaciones (nombre vacío, precio negativo, longitud máxima, etc.)
+- ✅ Sanitización XSS
+- ✅ Límites de paginación
+
+**Resultado esperado:** 20/20 tests pasados ✅
 
 ---
 
