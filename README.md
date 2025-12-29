@@ -477,7 +477,7 @@ Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICE
 
 ##  Autor
 
-Desarrollado con ❤️ por **Francisco Javier Quinteros Andrade**  
+Desarrollado por **Francisco Javier Quinteros Andrade**  
 - GitHub: [@JavierQuinan](https://github.com/JavierQuinan)
 
 ---
