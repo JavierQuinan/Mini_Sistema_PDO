@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 Mini Sistema CRUD - PHP PDO
+#  Mini Sistema CRUD - PHP PDO
 
 ### Sistema de Gestión de Items con Backend RESTful API
 
@@ -18,7 +18,7 @@
 
 ---
 
-## 📋 Tabla de Contenidos
+##  Tabla de Contenidos
 
 - [Características Destacadas](#-características-destacadas)
 - [Tech Stack](#-tech-stack)
@@ -31,13 +31,13 @@
 
 ---
 
-## ✨ Características Destacadas
+##  Características Destacadas
 
 <table>
 <tr>
 <td>
 
-### 🎯 CRUD Completo
+###  CRUD Completo
 - ✅ Crear, Leer, Actualizar, Eliminar
 - ✅ Paginación inteligente
 - ✅ Validaciones en tiempo real
@@ -46,7 +46,7 @@
 </td>
 <td>
 
-### 🔒 Seguridad
+###  Seguridad
 - ✅ PDO Prepared Statements
 - ✅ Protección XSS
 - ✅ Validaciones robustas
@@ -57,7 +57,7 @@
 <tr>
 <td>
 
-### 🚀 Performance
+###  Performance
 - ✅ Singleton Pattern
 - ✅ Consultas optimizadas
 - ✅ Logging eficiente
@@ -66,7 +66,7 @@
 </td>
 <td>
 
-### 🧪 Testing
+###  Testing
 - ✅ 20 tests unitarios
 - ✅ Cobertura completa
 - ✅ CI/CD ready
@@ -78,7 +78,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 <div align="center">
 
@@ -133,37 +133,37 @@ Mini_Sistema_PDO/
 
 ---
 
-## 🎯 Características Avanzadas
+##  Características Avanzadas
 
 ### Frontend Moderno
 
-- 🎨 **Diseño Responsive**: funciona en móvil, tablet y desktop
-- 🌓 **Dark Mode**: soporte automático según preferencias del sistema
-- ✏️ **Edición Inline**: edita directamente en la tabla
-- 🔄 **Actualización en Tiempo Real**: sin recargar página
-- 🎭 **Modal Moderno**: interfaz intuitiva para actualizaciones
+-  **Diseño Responsive**: funciona en móvil, tablet y desktop
+-  **Dark Mode**: soporte automático según preferencias del sistema
+-  **Edición Inline**: edita directamente en la tabla
+-  **Actualización en Tiempo Real**: sin recargar página
+-  **Modal Moderno**: interfaz intuitiva para actualizaciones
 
 ### Backend Robusto
 
-- 🏗️ **Patrón Singleton**: una sola conexión a BD
-- 🔄 **Transacciones**: soporte completo para operaciones complejas
-- 📝 **Logging Avanzado**: contexto completo en cada error
-- 🎯 **API RESTful**: diseño limpio y escalable
-- ⚡ **Performance**: consultas optimizadas
+-  **Patrón Singleton**: una sola conexión a BD
+-  **Transacciones**: soporte completo para operaciones complejas
+-  **Logging Avanzado**: contexto completo en cada error
+-  **API RESTful**: diseño limpio y escalable
+-  **Performance**: consultas optimizadas
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 
 ### Versión 2.0 (Planificado)
 
-- [ ] 🔍 Búsqueda y filtros avanzados
-- [ ] 📊 Dashboard con estadísticas
-- [ ] 🔐 Sistema de autenticación JWT
-- [ ] 👥 Multi-usuario con roles
-- [ ] 📱 PWA (Progressive Web App)
-- [ ] 🐳 Docker containerization
-- [ ] 📈 Métricas y analytics
+- [ ]  Búsqueda y filtros avanzados
+- [ ]  Dashboard con estadísticas
+- [ ]  Sistema de autenticación JWT
+- [ ]  Multi-usuario con roles
+- [ ]  PWA (Progressive Web App)
+- [ ]  Docker containerization
+- [ ]  Métricas y analytics
 
 ### Mejoras Continuas
 
@@ -176,7 +176,7 @@ Mini_Sistema_PDO/
 
 ---
 
-## 📦 Instalación Rápida
+##  Instalación Rápida
 
 ### Opción 1: Setup Automático con SQLite (⚡ Recomendado)
 
@@ -208,7 +208,7 @@ mysql -u root -p < sql.txt
 php -S localhost:8000 -t public
 ```
 
-### 🎯 Verificar Instalación
+###  Verificar Instalación
 
 ```bash
 # Ejecutar suite de tests
@@ -219,7 +219,7 @@ php run_tests.php
 
 ---
 
-## 🔌 Endpoints de la API
+##  Endpoints de la API
 
 Base: `/api/items.php`
 
@@ -241,7 +241,7 @@ Base: `/api/items.php`
 ### Ejemplos de Uso
 
 <details>
-<summary>📋 Listar Items (con paginación)</summary>
+<summary> Listar Items (con paginación)</summary>
 
 ```bash
 curl "http://localhost:8000/api/items.php?action=listar&limit=10&offset=0"
@@ -297,7 +297,7 @@ curl "http://localhost:8000/api/items.php?action=listar&limit=10&offset=0"
 </details>
 
 <details>
-<summary>🗑️ Eliminar Item</summary>
+<summary> Eliminar Item</summary>
 
 ```bash
 curl -X POST "http://localhost:8000/api/items.php?action=eliminar&id=6"
@@ -329,16 +329,16 @@ php run_tests.php
 
 | Categoría | Tests | Estado |
 |-----------|-------|--------|
-| 📋 CRUD Básico | 6 tests | ✅ 100% |
-| 🛡️ Validaciones | 4 tests | ✅ 100% |
-| 🔒 Seguridad XSS | 2 tests | ✅ 100% |
-| 📄 Paginación | 2 tests | ✅ 100% |
+|  CRUD Básico | 6 tests | ✅ 100% |
+|  Validaciones | 4 tests | ✅ 100% |
+|  Seguridad XSS | 2 tests | ✅ 100% |
+|  Paginación | 2 tests | ✅ 100% |
 | **Total** | **20 tests** | **✅ 100%** |
 
 ### Ejemplo de Salida
 
 ```
-🧪 Iniciando Suite de Tests - Mini Sistema PDO
+ Iniciando Suite de Tests - Mini Sistema PDO
 ============================================================
 
 📋 Test 1: Listar Items
@@ -353,39 +353,39 @@ php run_tests.php
 ...
 
 ============================================================
-📊 RESUMEN DE TESTS
+ RESUMEN DE TESTS
 ============================================================
 ✅ Tests pasados: 20
 ❌ Tests fallidos: 0
 📈 Total: 20
 
-🎉 ¡Todos los tests pasaron exitosamente!
+ ¡Todos los tests pasaron exitosamente!
 ``` refused | {"code":"2002"}
 [2025-12-28 10:31:12] Validación fallida: El nombre no puede exceder 120 caracteres
 ```
 
 ---
 
-## 🚀 Mejoras implementadas
+##  Mejoras implementadas
 
-✨ **Esta versión mejorada incluye:**
+ **Esta versión mejorada incluye:**
 
-1. 🔒 **Sistema de CORS configurable** para integración con frontends
-2. 📝 **Logging de errores** con contexto detallado
-3. 🛡️ **Sanitización mejorada** contra XSS con `htmlspecialchars()`
-4. ✅ **Validaciones extendidas**: límites de caracteres (120) y precio (999999.99)
-5. 📦 **Archivo `.gitignore`** para proteger configuración sensible
-6. 📋 **Plantilla `config.example.php`** para facilitar setup
-7. 🎯 **Manejo de errores diferenciado** (validación, BD, genéricos)
-8. 📚 **Documentación mejorada** con badges y estructura clara
-9. ⚖️ **Licencia MIT** incluida
-10. 🗄️ **Soporte SQLite** - funciona sin necesidad de instalar MySQL
-11. 🧪 **Suite de tests** - 20 tests unitarios automatizados
-12. 🚀 **Setup automático** - script de configuración con un solo comando
+1.  **Sistema de CORS configurable** para integración con frontends
+2.  **Logging de errores** con contexto detallado
+3.  **Sanitización mejorada** contra XSS con `htmlspecialchars()`
+4.  **Validaciones extendidas**: límites de caracteres (120) y precio (999999.99)
+5.  **Archivo `.gitignore`** para proteger configuración sensible
+6.  **Plantilla `config.example.php`** para facilitar setup
+7.  **Manejo de errores diferenciado** (validación, BD, genéricos)
+8.  **Documentación mejorada** con badges y estructura clara
+9.  **Licencia MIT** incluida
+10. **Soporte SQLite** - funciona sin necesidad de instalar MySQL
+11. **Suite de tests** - 20 tests unitarios automatizados
+12. **Setup automático** - script de configuración con un solo comando
 
 ---
 
-## 🧪 Tests
+##  Tests
 
 El proyecto incluye una suite completa de tests unitarios:
 
@@ -407,7 +407,7 @@ php run_tests.php
 
 ---
 
-## 🖥️ Frontend (index.html)
+##  Frontend (index.html)
 
 - Formulario para crear items.
 - Tabla con filas editables (guardado **on blur**).
@@ -417,7 +417,7 @@ php run_tests.php
 
 ---
 
-## 🧪 Troubleshooting
+##  Troubleshooting
 
 - **`Unexpected token <`** en el frontend:
   - Estás recibiendo HTML (error/404) en vez de JSON.
@@ -439,7 +439,7 @@ php run_tests.php
 
 ---
 
-## 🗺️ Roadmap (ideas)
+##  Roadmap (ideas)
 
 - Filtro por nombre y **búsqueda live**.
 - **Paginación** y ordenamiento por columnas.
@@ -449,7 +449,7 @@ php run_tests.php
 
 ---
 
-## ❓ FAQ
+##  FAQ
 
 **¿Por qué PDO en vez de MySQLi?**  
 - Portabilidad multi-motor (MySQL, PostgreSQL, SQLite, etc.).  
@@ -459,7 +459,7 @@ php run_tests.php
 
 ---
 
-## � Contribuir
+##  Contribuir
 
 1. Fork el proyecto
 2. Crea una rama: `git checkout -b feature/nueva-funcionalidad`
@@ -469,20 +469,20 @@ php run_tests.php
 
 ---
 
-## 📝 Licencia
+##  Licencia
 
 Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ---
 
-## 👨‍💻 Autor
+##  Autor
 
 Desarrollado con ❤️ por **Francisco Javier Quinteros Andrade**  
 - GitHub: [@JavierQuinan](https://github.com/JavierQuinan)
 
 ---
 
-## 📚 Recursos adicionales
+##  Recursos adicionales
 
 - [PHP PDO Documentation](https://www.php.net/manual/es/book.pdo.php)
 - [MySQL Documentation](https://dev.mysql.com/doc/)
