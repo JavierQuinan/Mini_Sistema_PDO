@@ -30,9 +30,21 @@ final class ItemModel {
   }
 
   public function crear(string $nombre, float $precio): array {
-    $nombre = trim($nombre);
-    if ($nombre === '') throw new \InvalidArgumentException('El nombre es obligatorio');
-    if ($precio < 0)  throw new \InvalidArgumentException('El precio no puede ser negativo');
+    $nombre = sanitize_string($nombre);
+    
+    // Validaciones mejoradas
+    if (strlen($nombre) === 0) {
+      throw new \InvalidArgumentException('El nombre es obligatorio');
+    }
+    if (strlen($nombre) > 120) {
+      throw new \InvalidArgumentException('El nombre no puede exceder 120 caracteres');
+    }
+    if ($precio < 0) {
+      throw new \InvalidArgumentException('El precio no puede ser negativo');
+    }
+    if ($precio > 999999.99) {
+      throw new \InvalidArgumentException('El precio excede el límite permitido');
+    }
 
     $this->db->execStmt(
       "INSERT INTO items (nombre, precio) VALUES (:n, :p)",
@@ -46,10 +58,22 @@ final class ItemModel {
     $item = $this->obtener($id);
     if (!$item) return null;
 
-    $nombre = $nombre !== null ? trim($nombre) : $item['nombre'];
+    $nombre = $nombre !== null ? sanitize_string($nombre) : $item['nombre'];
     $precio = $precio !== null ? (float)$precio : (float)$item['precio'];
-    if ($nombre === '') throw new \InvalidArgumentException('El nombre es obligatorio');
-    if ($precio < 0)  throw new \InvalidArgumentException('El precio no puede ser negativo');
+    
+    // Validaciones mejoradas
+    if (strlen($nombre) === 0) {
+      throw new \InvalidArgumentException('El nombre es obligatorio');
+    }
+    if (strlen($nombre) > 120) {
+      throw new \InvalidArgumentException('El nombre no puede exceder 120 caracteres');
+    }
+    if ($precio < 0) {
+      throw new \InvalidArgumentException('El precio no puede ser negativo');
+    }
+    if ($precio > 999999.99) {
+      throw new \InvalidArgumentException('El precio excede el límite permitido');
+    }
 
     $this->db->execStmt(
       "UPDATE items SET nombre = :n, precio = :p WHERE id = :id",

@@ -1,0 +1,19 @@
+# Configuración privada
+config.php
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Dependencias (si usas Composer)
+vendor/
+composer.lock

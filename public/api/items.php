@@ -1,17 +1,27 @@
 <?php
 declare(strict_types=1);
 
+// ✅ subir dos niveles porque estamos en /public/api
+require_once __DIR__ . '/../../ItemModel.php';
+
+// Configurar CORS
+setup_cors();
+
 // Forzar JSON SIEMPRE (nada de <br/>)
 header('Content-Type: application/json; charset=utf-8');
 ini_set('display_errors', '0');
+
+// Manejador de errores mejorado
 set_error_handler(function($sev, $msg, $file, $line){
+  log_error("PHP Error: $msg", ['file' => $file, 'line' => $line, 'severity' => $sev]);
   http_response_code(500);
-  echo json_encode(['ok'=>false,'error'=>$msg,'file'=>$file,'line'=>$line], JSON_UNESCAPED_UNICODE);
+  if (APP_DEBUG) {
+    echo json_encode(['ok'=>false,'error'=>$msg,'file'=>$file,'line'=>$line], JSON_UNESCAPED_UNICODE);
+  } else {
+    echo json_encode(['ok'=>false,'error'=>'Error interno del servidor'], JSON_UNESCAPED_UNICODE);
+  }
   exit;
 });
-
-// ✅ subir dos niveles porque estamos en /public/api
-require_once __DIR__ . '/../../ItemModel.php';
 
 try {
   $items  = new ItemModel();
@@ -75,7 +85,28 @@ try {
         ]
       ], JSON_UNESCAPED_UNICODE);
   }
-} catch (Throwable $e) {
-  http_response_code(500);
+} catch (\InvalidArgumentException $e) {
+  log_error('Validación fallida: ' . $e->getMessage());
+  http_response_code(400);
   echo json_encode(['ok'=>false,'error'=>$e->getMessage()], JSON_UNESCAPED_UNICODE);
+} catch (\PDOException $e) {
+  log_error('Error de base de datos: ' . $e->getMessage(), ['code' => $e->getCode()]);
+  http_response_code(500);
+  if (APP_DEBUG) {
+    echo json_encode(['ok'=>false,'error'=>'Error de BD: ' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+  } else {
+    echo json_encode(['ok'=>false,'error'=>'Error de base de datos'], JSON_UNESCAPED_UNICODE);
+  }
+} catch (Throwable $e) {
+  log_error('Error inesperado: ' . $e->getMessage(), [
+    'type' => get_class($e),
+    'file' => $e->getFile(),
+    'line' => $e->getLine()
+  ]);
+  http_response_code(500);
+  if (APP_DEBUG) {
+    echo json_encode(['ok'=>false,'error'=>$e->getMessage(),'type'=>get_class($e)], JSON_UNESCAPED_UNICODE);
+  } else {
+    echo json_encode(['ok'=>false,'error'=>'Error interno del servidor'], JSON_UNESCAPED_UNICODE);
+  }
 }

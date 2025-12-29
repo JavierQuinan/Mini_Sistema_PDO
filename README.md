@@ -1,34 +1,45 @@
-# Mini Sistema CRUD (PHP + PDO)
+# 🚀 Mini Sistema CRUD (PHP + PDO)
 
-Pequeño sistema CRUD de **Items** con backend en **PHP + PDO** (API JSON) y frontend en **HTML + CSS + JS** sin frameworks.  
-Diseñado para ser **simple, entendible y extensible**.
+[![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-5.7+-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+Sistema CRUD completo de **Items** con backend en **PHP + PDO** (API JSON) y frontend en **HTML + CSS + JS** vanilla.  
+Diseñado para ser **simple, seguro, entendible y extensible**.
 
 > **Stack:** PHP 8+, MySQL/MariaDB, PDO, HTML/CSS/JS vanilla.
 
 ---
 
-## 📦 Características
+## ✨ Características
 
-- CRUD completo: **crear, listar, actualizar, eliminar**.
-- API JSON con **errores siempre en JSON** (sin HTML inesperado).
-- **PDO** con *prepared statements* y placeholders **nombrados**.
-- Frontend minimalista con **tabla editable**, **modal de actualización** y estilos modernos.
-- Listo para correr con `php -S` (server embebido de PHP).
+- ✅ **CRUD completo**: crear, listar, actualizar, eliminar
+- 🔒 **Seguridad**: PDO con *prepared statements*, validaciones mejoradas, sanitización de inputs
+- 🌐 **API JSON**: respuestas siempre en formato JSON con manejo de errores robusto
+- 🎨 **Frontend moderno**: tabla editable, modal de actualización, diseño responsive
+- 📝 **Logging**: sistema de registro de errores para debugging
+- 🛡️ **CORS configurado**: listo para integración con frontends externos
+- ⚡ **Validaciones**: límites de tamaño, rangos de precio, sanitización XSS
 
 ---
 
 ## 🗂️ Estructura del proyecto
 
 ```
-Mini-PDO/
-  config.php               # (privado, se ignora en git) credenciales reales
-  config.example.php       # (público) plantilla de configuración
-  Database.php             # Singleton PDO + helpers (select/exec/tx)
-  ItemModel.php            # Lógica de dominio (listar/obtener/crear/actualizar/eliminar)
-  public/
-    index.html             # UI (form, tabla, modal, CSS y JS)
-    api/
-      items.php            # Endpoints JSON
+Mini_Sistema_PDO/
+├── config.php              # (privado) Configuración real - NO subir a git
+├── config.example.php      # (público) Plantilla de configuración
+├── Database.php            # Singleton PDO + helpers (select/exec/tx)
+├── ItemModel.php           # Lógica de dominio (CRUD completo)
+├── .gitignore             # Archivos ignorados por git
+├── sql.txt                # Script de creación de BD
+├── README.md              # Esta documentación
+├── LICENSE                # Licencia MIT
+├── logs/                  # Directorio de logs (auto-creado)
+└── public/
+    ├── index.html         # UI (form, tabla, modal, CSS y JS)
+    └── api/
+        └── items.php      # Endpoints JSON
 ```
 
 ---
@@ -153,12 +164,51 @@ curl -X POST "http://127.0.0.1:8080/api/items.php?action=eliminar&id=1"
 
 ---
 
-## 🛡️ Seguridad y buenas prácticas
+## 🛡️ Seguridad
 
-- **Prepared statements** con PDO y `ATTR_EMULATE_PREPARES=false` → evita inyecciones SQL.
-- **Errores como JSON**: el endpoint captura *warnings/notices* y responde con `{ ok:false, error: ... }`.
-- Validaciones del lado **servidor** (nombre requerido, precio ≥ 0).
-- **No** publiques `config.php`. Usa `config.example.php` en el repo.
+- ✅ **PDO con prepared statements** (protección contra SQL injection)
+- ✅ **Sanitización de inputs** con `htmlspecialchars()`
+- ✅ **Validaciones robustas**: longitud de strings, rangos numéricos
+- ✅ **CORS configurado** para peticiones cross-origin
+- ✅ **Manejo de errores centralizado** con logging
+- ✅ **Headers de seguridad** configurados
+- ✅ **Protección XSS** mediante sanitización
+
+---
+
+## 📊 Validaciones implementadas
+
+| Campo    | Validación                                      |
+|----------|-------------------------------------------------|
+| `nombre` | No vacío, máx 120 caracteres, sanitizado XSS   |
+| `precio` | >= 0, máx 999999.99                             |
+
+---
+
+## 🔍 Logging
+
+Los errores se registran automáticamente en `logs/error.log` cuando `APP_DEBUG = true`:
+
+```
+[2025-12-28 10:30:45] Error de BD: Connection refused | {"code":"2002"}
+[2025-12-28 10:31:12] Validación fallida: El nombre no puede exceder 120 caracteres
+```
+
+---
+
+## 🚀 Mejoras implementadas
+
+✨ **Esta versión mejorada incluye:**
+
+1. 🔒 **Sistema de CORS configurable** para integración con frontends
+2. 📝 **Logging de errores** con contexto detallado
+3. 🛡️ **Sanitización mejorada** contra XSS con `htmlspecialchars()`
+4. ✅ **Validaciones extendidas**: límites de caracteres (120) y precio (999999.99)
+5. 📦 **Archivo `.gitignore`** para proteger configuración sensible
+6. 📋 **Plantilla `config.example.php`** para facilitar setup
+7. 🎯 **Manejo de errores diferenciado** (validación, BD, genéricos)
+8. 📚 **Documentación mejorada** con badges y estructura clara
+9. ⚖️ **Licencia MIT** incluida
 
 ---
 
@@ -214,12 +264,37 @@ curl -X POST "http://127.0.0.1:8080/api/items.php?action=eliminar&id=1"
 
 ---
 
-## 🧑‍💻 Autor
+## � Contribuir
 
-- **Francisco Javier Quinteros Andrade** – [@JavierQuinan](https://github.com/JavierQuinan)
+1. Fork el proyecto
+2. Crea una rama: `git checkout -b feature/nueva-funcionalidad`
+3. Commit tus cambios: `git commit -m 'Agrega nueva funcionalidad'`
+4. Push a la rama: `git push origin feature/nueva-funcionalidad`
+5. Abre un Pull Request
 
 ---
 
 ## 📝 Licencia
 
-Este proyecto está bajo la licencia **MIT**. Siéntete libre de usarlo, mejorarlo y compartirlo.
+Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
+## 👨‍💻 Autor
+
+Desarrollado con ❤️ por **Francisco Javier Quinteros Andrade**  
+- GitHub: [@JavierQuinan](https://github.com/JavierQuinan)
+
+---
+
+## 📚 Recursos adicionales
+
+- [PHP PDO Documentation](https://www.php.net/manual/es/book.pdo.php)
+- [MySQL Documentation](https://dev.mysql.com/doc/)
+- [MDN Web Docs](https://developer.mozilla.org/)
+- [OWASP Security Guidelines](https://owasp.org/)
+
+---
+
+**¿Preguntas o sugerencias?** Abre un [issue](../../issues) en GitHub.
+
