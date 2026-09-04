@@ -1,76 +1,66 @@
 # Mini Sistema CRUD — PHP PDO
 
-> **Repository status:** learning / historical engineering evidence. This repository demonstrates PHP/PDO CRUD, validation and a small custom test runner. It is **not presented as production-ready software**.
+> **CONSOLIDATED / HISTORICAL SOURCE**
 
-## Verified scope
+## ES
 
-The current codebase contains:
+Este repositorio se conserva temporalmente como fuente histórica del ejemplo PHP/PDO. El material útil ya fue curado y refactorizado dentro de:
 
-- PHP 8-style typed code
-- PDO database access
-- SQLite local setup, with MySQL configuration example
-- CRUD operations for items
-- pagination support
-- input validation
-- HTML escaping/sanitization checks
-- JSON API responses
-- configurable CORS helpers
-- a versioned custom test runner covering CRUD, validation, pagination and an XSS-oriented escaping case
+`JavierQuinan/Proyectos` → `foundations/php/pdo/`
 
-## Repository structure
+La versión consolidada mantiene los conceptos valiosos — PDO, prepared statements, CRUD, validación y transacciones — pero elimina configuración local innecesaria, utiliza una demo SQLite temporal reproducible y documenta explícitamente la procedencia.
 
-```text
-Database.php            database connection abstraction
-ItemModel.php           item persistence and validation
-public/                 browser/API entry points
-config.example.php      local configuration template
-config_sqlite.php       SQLite-oriented development configuration
-setup_sqlite.php        local SQLite setup
-run_tests.php           custom functional test runner
-sql.txt                 schema/reference SQL
-```
+Este repositorio ya no debe usarse como evidencia principal del portfolio ni recibir nuevas features. Su siguiente estado recomendado es **archivado** y, después de conservar el snapshot necesario, puede evaluarse su eliminación definitiva.
 
-## Local configuration
+### Qué se preservó
 
-`config.php` is intentionally not versioned. Copy the example locally:
+- wrapper PDO;
+- prepared statements;
+- operaciones CRUD;
+- validaciones;
+- transacciones;
+- concepto de acceso a datos desacoplado.
 
-```bash
-cp config.example.php config.php
-```
+### Qué no se promovió
 
-Then configure your environment. Real credentials must never be committed.
+- configuración local específica;
+- CORS permisivo de desarrollo;
+- estructura API/HTML que no aporta señal adicional;
+- claims de producción.
 
-The provided example enables debug mode and permissive CORS for local development. Those values are not production defaults.
+Destino consolidado:
+https://github.com/JavierQuinan/Proyectos/tree/main/foundations/php/pdo
 
-## Run with SQLite
+---
 
-```bash
-php setup_sqlite.php
-php -S localhost:8000 -t public
-```
+## EN
 
-## Tests
+This repository is temporarily preserved as the historical source for the PHP/PDO learning example. The useful material has already been curated and refactored into:
 
-The repository includes a small custom PHP test runner rather than a PHPUnit/Jest-style framework:
+`JavierQuinan/Proyectos` → `foundations/php/pdo/`
 
-```bash
-php run_tests.php
-```
+The consolidated version keeps the useful concepts — PDO, prepared statements, CRUD, validation and transactions — while removing unnecessary machine-local configuration, using a reproducible ephemeral SQLite demo and documenting provenance explicitly.
 
-The versioned suite exercises listing, creation, retrieval, update, input validation, deletion, pagination and an escaping/XSS-oriented case. This README intentionally does not claim a coverage percentage because no reproducible coverage report is versioned.
+This repository should no longer be used as primary portfolio evidence or receive new features. Its recommended next state is **archived**, and after the required snapshot is preserved it can be evaluated for final deletion.
 
-## Security / hardening notes
+### Preserved
 
-This project is retained as learning evidence. Before production use it would require, at minimum, environment-specific CORS, debug disabled, centralized configuration/secrets management, stronger observability, a standard test framework/CI pipeline, authentication/authorization where required, and a broader security review.
+- PDO wrapper;
+- prepared statements;
+- CRUD operations;
+- validation boundaries;
+- transactions;
+- separated data-access concept.
 
-## Portfolio classification
+### Not promoted
 
-**Category:** PHP / PDO learning evidence  
-**Visibility:** Public  
-**Portfolio priority:** Low  
-**Recommended use:** Historical evidence of PHP/PDO, CRUD and validation work; not a pinned repository.
+- machine-specific local configuration;
+- permissive development CORS;
+- API/HTML structure that adds no additional signal;
+- production-readiness claims.
 
-See the main [GitHub profile](https://github.com/JavierQuinan) and [Portfolio Governance](https://github.com/JavierQuinan/JavierQuinan/blob/main/docs/PORTFOLIO_GOVERNANCE.md).
+Consolidated destination:
+https://github.com/JavierQuinan/Proyectos/tree/main/foundations/php/pdo
 
 ## License
 
